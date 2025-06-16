@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Conta Longa</title>
+    <style>
+      @font-face {
+        font-family: "Century Gothic";
+        src: local("Century Gothic Bold"), local("CenturyGothic-Bold");
+        font-weight: bold;
+      }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        font-family: "Century Gothic", Arial, sans-serif;
+        background-color: #f3f4f6;
+        margin: 0;
+      }
+      .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 10px 20px;
+        border: 1px solid #ddd;
+        border-radius: 12px;
+        background-color: #ffffff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        font-size: 24px;
+        font-weight: bold;
+        text-align: center;
+        color: #333;
+        width: auto;
+        height: auto;
+      }
+      .img-lua {
+        margin-top: 32px;
+        width: 700px;
+        max-width: 98vw;
+        border-radius: 20px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.17);
+        display: block;
+      }
+      @media (max-width: 800px) {
+        .img-lua {
+          width: 95vw;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div id="contaLonga"></div>
+      <img
+        id="imgLua"
+        class="img-lua"
+        style="display: none"
+        alt="Imagem da Lua Atual"
+      />
+    </div>
+    <script>
+      function gerarLuasFixas(anoBase) {
+        return [
+          {
+            nome: "Lua 1: Lua Magnética do Morcego - Lua do Propósito",
+            inicio: new Date(anoBase, 6, 26),
+            totem: "Morcego",
+          },
+          {
+            nome: "Lua 2: Lua Lunar do Escorpião - Lua do Desafio",
+            inicio: new Date(anoBase, 7, 23),
+            totem: "Escorpião",
+          },
+          {
+            nome: "Lua 3: Lua Elétrica do Veado - Lua do Serviço",
+            inicio: new Date(anoBase, 8, 20),
+            totem: "Veado",
+          },
+          {
+            nome: "Lua 4: Lua Autoexistente da Coruja - Lua da Forma",
+            inicio: new Date(anoBase, 9, 18),
+            totem: "Coruja",
+          },
+          {
+            nome: "Lua 5: Lua Harmônica do Pavão - Lua da Radiação",
+            inicio: new Date(anoBase, 10, 15),
+            totem: "Pavão",
+          },
+          {
+            nome: "Lua 6: Lua Rítmica do Lagarto - Lua da Igualdade",
+            inicio: new Date(anoBase, 11, 13),
+            totem: "Lagarto",
+          },
+          {
+            nome: "Lua 7: Lua Ressonante do Macaco - Lua da Sintonização",
+            inicio: new Date(anoBase + 1, 0, 10),
+            totem: "Macaco",
+          },
+          {
+            nome: "Lua 8: Lua Galáctica do Falcão - Lua da Integridade",
+            inicio: new Date(anoBase + 1, 1, 7),
+            totem: "Falcão",
+          },
+          {
+            nome: "Lua 9: Lua Solar do Jaguar - Lua da Intenção",
+            inicio: new Date(anoBase + 1, 2, 7),
+            totem: "Jaguar",
+          },
+          {
+            nome: "Lua 10: Lua Planetária do Cachorro - Lua da Manifestação",
+            inicio: new Date(anoBase + 1, 3, 4),
+            totem: "Cachorro",
+          },
+          {
+            nome: "Lua 11: Lua Espectral da Serpente - Lua da Liberação",
+            inicio: new Date(anoBase + 1, 4, 2),
+            totem: "Serpente",
+          },
+          {
+            nome: "Lua 12: Lua Cristal do Coelho - Lua da Cooperação",
+            inicio: new Date(anoBase + 1, 4, 30),
+            totem: "Coelho",
+          },
+          {
+            nome: "Lua 13: Lua Cósmica da Tartaruga - Lua da Presença",
+            inicio: new Date(anoBase + 1, 5, 27),
+            totem: "Tartaruga",
+          },
+        ];
+      }
+
+      function calcularDiaDaLuaEPlasma(dia, mes, ano) {
+        const anoBase = mes < 7 || (mes === 7 && dia < 26) ? ano - 1 : ano;
+        const luasFixas = gerarLuasFixas(anoBase);
+        const dataEntrada = new Date(ano, mes - 1, dia);
+
+        if (mes === 7 && dia === 25) {
+          return { diaDaLua: 365, numeroLua: null };
+        }
+
+        for (let i = 0; i < luasFixas.length; i++) {
+          const inicioLua = luasFixas[i].inicio;
+          const proximaLua =
+            i < luasFixas.length - 1
+              ? luasFixas[i + 1].inicio
+              : new Date(anoBase + 1, 6, 25);
+
+          if (dataEntrada >= inicioLua && dataEntrada < proximaLua) {
+            const diaNaLua =
+              Math.floor((dataEntrada - inicioLua) / (1000 * 60 * 60 * 24)) + 1;
+            return { diaDaLua: diaNaLua, numeroLua: i + 1 };
+          }
+        }
+        return { diaDaLua: null, numeroLua: null };
+      }
+
+      function calcularAnel(ano, mes, dia) {
+        const anoBase = 1987;
+        const anoAjustado = mes < 7 || (mes === 7 && dia < 26) ? ano - 1 : ano;
+        const anelAtual = (((anoAjustado - anoBase) % 52) + 52) % 52;
+        return anelAtual;
+      }
+
+      function calcularGiroSiriano(ano) {
+        const inicioNS0 = new Date(1987, 6, 26);
+        const anosDesde1987 = ano - inicioNS0.getFullYear();
+        const giroSiriano = Math.floor(anosDesde1987 / 52) + 1;
+        return giroSiriano;
+      }
+
+      // Tabela de luas com imagens
+      const luas = [
+        {
+          inicio: new Date("2025-05-30"),
+          fim: new Date("2025-06-26"),
+          imagem:
+            "https://static.wixstatic.com/media/5d56c4_601f9b12ac9640499ddcdb989b319f22~mv2.jpg",
+        },
+        {
+          inicio: new Date("2025-06-27"),
+          fim: new Date("2025-07-24"),
+          imagem:
+            "https://static.wixstatic.com/media/5d56c4_cb244e43903a44b59d8f4eea7c5db768~mv2.jpg",
+        },
+        {
+          inicio: new Date("2025-07-25"),
+          fim: new Date("2025-07-25"),
+          imagem:
+            "https://static.wixstatic.com/media/5d56c4_cf18deed77a540f2a255110d7dd51730~mv2.jpg",
+        },
+        {
+          inicio: new Date("2025-07-26"),
+          fim: new Date("2025-08-22"),
+          imagem:
+            "https://static.wixstatic.com/media/5d56c4_dd51fd29d55448518805aef73b29c6ef~mv2.jpg",
+        },
+        {
+          inicio: new Date("2025-08-23"),
+          fim: new Date("2025-09-19"),
+          imagem:
+            "https://static.wixstatic.com/media/5d56c4_7c2572269a744912962e801752751ff2~mv2.jpg",
+        },
+        {
+          inicio: new Date("2025-09-20"),
+          fim: new Date("2025-10-17"),
+          imagem:
+            "https://static.wixstatic.com/media/5d56c4_865e3016273f47d2add7a183d0f45291~mv2.jpg",
+        },
+        {
+          inicio: new Date("2025-10-18"),
+          fim: new Date("2025-11-14"),
+          imagem:
+            "https://static.wixstatic.com/media/5d56c4_778eb5a0ed354b2a8e448a89fd812ef6~mv2.jpg",
+        },
+        {
+          inicio: new Date("2025-11-15"),
+          fim: new Date("2025-12-12"),
+          imagem:
+            "https://static.wixstatic.com/media/5d56c4_91e20fdd03cd48f9b13e331512c833a9~mv2.jpg",
+        },
+        {
+          inicio: new Date("2025-12-13"),
+          fim: new Date("2026-01-09"),
+          imagem:
+            "https://static.wixstatic.com/media/5d56c4_0ea7b701db91407ba781abd413ce756e~mv2.jpg",
+        },
+        {
+          inicio: new Date("2026-01-10"),
+          fim: new Date("2026-02-06"),
+          imagem:
+            "https://static.wixstatic.com/media/5d56c4_e9f24ba3e6ee45fbb760a66d3c7ab5fb~mv2.jpg",
+        },
+        {
+          inicio: new Date("2026-02-07"),
+          fim: new Date("2026-03-06"),
+          imagem:
+            "https://static.wixstatic.com/media/5d56c4_2ece863e7ba7448b954e96723d52eec8~mv2.jpg",
+        },
+        {
+          inicio: new Date("2026-03-07"),
+          fim: new Date("2026-04-03"),
+          imagem:
+            "https://static.wixstatic.com/media/5d56c4_22e52abe69ee411e95ef3ded9d7e4da7~mv2.jpg",
+        },
+        {
+          inicio: new Date("2026-04-04"),
+          fim: new Date("2026-05-01"),
+          imagem:
+            "https://static.wixstatic.com/media/5d56c4_c6cd6d1dd4fe439ebd789f72c1965523~mv2.jpg",
+        },
+        {
+          inicio: new Date("2026-05-02"),
+          fim: new Date("2026-05-29"),
+          imagem:
+            "https://static.wixstatic.com/media/5d56c4_de776db5b5f04df79f6597ba9f8b7c40~mv2.jpg",
+        },
+        {
+          inicio: new Date("2026-05-30"),
+          fim: new Date("2026-06-26"),
+          imagem:
+            "https://static.wixstatic.com/media/5d56c4_c4333005923b4b179548a56ca06864c9~mv2.jpg",
+        },
+        {
+          inicio: new Date("2026-06-27"),
+          fim: new Date("2026-07-24"),
+          imagem:
+            "https://static.wixstatic.com/media/5d56c4_f317e122fda94c4c8b66082653ef81ca~mv2.jpg",
+        },
+      ];
+
+      function mostrarImagemLua() {
+        const hoje = new Date();
+        hoje.setHours(0, 0, 0, 0);
+
+        let imagem = null;
+        for (const lua of luas) {
+          if (hoje >= lua.inicio && hoje <= lua.fim) {
+            imagem = lua.imagem;
+            break;
+          }
+        }
+
+        const imgElem = document.getElementById("imgLua");
+        if (imagem) {
+          imgElem.src = imagem;
+          imgElem.style.display = "block";
+        } else {
+          imgElem.style.display = "none";
+        }
+      }
+
+      function exibirContaLonga() {
+        const hoje = new Date();
+        const dia = hoje.getDate();
+        const mes = hoje.getMonth() + 1;
+        const ano = hoje.getFullYear();
+
+        const resultado = calcularDiaDaLuaEPlasma(dia, mes, ano);
+        const anel = calcularAnel(ano, mes, dia);
+        const giroSiriano = calcularGiroSiriano(ano);
+
+        const contaLonga =
+          mes === 7 && dia === 25
+            ? `NS${giroSiriano}.${anel}.365`
+            : `NS${giroSiriano}.${anel}.${resultado.numeroLua || 13}.${
+                resultado.diaDaLua
+              }`;
+
+        document.getElementById("contaLonga").innerText = contaLonga;
+
+        mostrarImagemLua();
+      }
+
+      window.onload = exibirContaLonga;
+    </script>
+  </body>
+</html>
