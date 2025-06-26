@@ -272,25 +272,32 @@
       ];
 
       function mostrarImagemLua() {
-        const hoje = new Date();
-        hoje.setHours(0, 0, 0, 0);
+  const hoje = new Date();
+  hoje.setHours(0, 0, 0, 0); // Zera o horário
 
-        let imagem = null;
-        for (const lua of luas) {
-          if (hoje >= lua.inicio && hoje <= lua.fim) {
-            imagem = lua.imagem;
-            break;
-          }
-        }
+  let imagem = null;
+  for (const lua of luas) {
+    // Zera o horário das datas de início e fim
+    const inicio = new Date(lua.inicio);
+    inicio.setHours(0, 0, 0, 0);
 
-        const imgElem = document.getElementById("imgLua");
-        if (imagem) {
-          imgElem.src = imagem;
-          imgElem.style.display = "block";
-        } else {
-          imgElem.style.display = "none";
-        }
-      }
+    const fim = new Date(lua.fim);
+    fim.setHours(0, 0, 0, 0);
+
+    if (hoje >= inicio && hoje <= fim) {
+      imagem = lua.imagem;
+      break;
+    }
+  }
+
+  const imgElem = document.getElementById("imgLua");
+  if (imagem) {
+    imgElem.src = imagem;
+    imgElem.style.display = "block";
+  } else {
+    imgElem.style.display = "none";
+  }
+}
 
       function exibirContaLonga() {
         const hoje = new Date();
