@@ -273,18 +273,19 @@
 
       function mostrarImagemLua() {
   const hoje = new Date();
-  hoje.setHours(0, 0, 0, 0); // Zera o horário
+  hoje.setHours(0, 0, 0, 0); // Garante comparação apenas de datas, sem hora
 
   let imagem = null;
   for (const lua of luas) {
-    // Zera o horário das datas de início e fim
     const inicio = new Date(lua.inicio);
     inicio.setHours(0, 0, 0, 0);
 
-    const fim = new Date(lua.fim);
-    fim.setHours(0, 0, 0, 0);
+    // Cria próximo início (+1 dia da data fim)
+    const proximoInicio = new Date(lua.fim);
+    proximoInicio.setDate(proximoInicio.getDate() + 1);
+    proximoInicio.setHours(0, 0, 0, 0);
 
-    if (hoje >= inicio && hoje <= fim) {
+    if (hoje >= inicio && hoje < proximoInicio) {
       imagem = lua.imagem;
       break;
     }
@@ -298,6 +299,7 @@
     imgElem.style.display = "none";
   }
 }
+
 
       function exibirContaLonga() {
         const hoje = new Date();
