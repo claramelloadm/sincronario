@@ -183,13 +183,13 @@
           inicio: new Date(2025, 5, 27), // 27/06/2025
           fim: new Date(2025, 6, 24), // 24/07/2025
           imagem:
-            "https://static.wixstatic.com/media/5d56c4_cb244e43903a44b59d8f4eea7c5db678~mv2.jpg",
+            "https://static.wixstatic.com/media/5d56c4_f98ce0bd5e63456fbe58a65a619e6f40~mv2.jpg",
         },
         {
           inicio: new Date(2025, 6, 25), // 25/07/2025
           fim: new Date(2025, 6, 25), // 25/07/2025
           imagem:
-            "https://static.wixstatic.com/media/5d56c4_f98ce0bd5e63456fbe58a65a619e6f40~mv2.jpg",
+            "https://static.wixstatic.com/media/5d56c4_cf18deed77a540f2a255110d7dd51730~mv2.jpg",
         },
         {
           inicio: new Date(2025, 6, 26), // 26/07/2025
@@ -293,25 +293,21 @@
         );
       }
 
-      function mostrarImagemLua() {
-        const hoje = new Date();
-        // Zera as horas
-        hoje.setHours(0, 0, 0, 0);
+      function zerarHora(date) {
+        return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+      }
 
+      function mostrarImagemLua() {
+        const hoje = zerarHora(new Date());
         let imagem = null;
         for (const lua of luas) {
-          const inicio = new Date(lua.inicio);
-          inicio.setHours(0, 0, 0, 0);
-
-          const fim = new Date(lua.fim);
-          fim.setHours(0, 0, 0, 0);
-
-          if (dataIgualOuDepois(hoje, inicio) && dataIgualOuAntes(hoje, fim)) {
+          const inicio = zerarHora(lua.inicio);
+          const fim = zerarHora(lua.fim);
+          if (hoje >= inicio && hoje <= fim) {
             imagem = lua.imagem;
             break;
           }
         }
-
         const imgElem = document.getElementById("imgLua");
         if (imagem) {
           imgElem.src = imagem;
